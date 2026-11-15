@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Pallet — Hand Made Candles @pallet_.shop">
+<title>Pallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Allura&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: Pallet identity — monochrome line-art (flame, waves, 4-point stars, dots), wide-spaced wordmark, script accents.
+   Hero with logo + bag photo, products as wide rows, add-ons grid, sticky cart → WhatsApp */
+:root{
+  --bg:#F7F6F3; --surface:#FFFFFF; --ink:#151515; --muted:#76716A;
+  --line:#E4E0D9; --soft:#EEEBE6; --star:#A39D94;
+  --latin:"Josefin Sans","Helvetica Neue",Arial,sans-serif;
+  --script:"Allura","Brush Script MT",cursive;
+  --body:"IBM Plex Sans Arabic",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F0F0F; --surface:#181817; --ink:#F2F0EC; --muted:#A39E97; --line:#2C2B29; --soft:#222120; --star:#6E6A64; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F0F0F; --surface:#181817; --ink:#F2F0EC; --muted:#A39E97; --line:#2C2B29; --soft:#222120; --star:#6E6A64; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:2;direction:rtl;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 130px}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--body);font-weight:500;text-wrap:balance;margin:0;line-height:1.7}
+.latin{font-family:var(--latin);direction:ltr;unicode-bidi:isolate;font-weight:300}
+.script{font-family:var(--script);direction:ltr;unicode-bidi:isolate;font-weight:400}
+.logo{color:var(--ink)}
+.logo .st{fill:var(--ink)}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:18px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand svg{width:34px;height:34px}
+.brand span{font-family:var(--latin);font-weight:300;font-size:1.35rem;letter-spacing:.32em;direction:ltr;padding-left:.32em}
+.top nav{display:flex;gap:20px}
+.top nav a{color:var(--muted);text-decoration:none;font-size:.92rem}
+
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:48px 56px}
+.hero > div{display:flex;flex-direction:column;align-items:center}
+.hero p{margin-inline:auto}
+.hero .lockup{display:flex;flex-direction:column;align-items:center;gap:4px}
+.hero .lockup svg{width:96px;height:96px}
+.hero .word{font-family:var(--latin);font-weight:300;font-size:2.6rem;letter-spacing:.38em;direction:ltr;line-height:1.2;padding-left:.38em}
+.hero h1{font-size:clamp(1.7rem,4.6vw,2.5rem);font-weight:400;line-height:1.75;margin-top:22px}
+.hero p{color:var(--muted);max-width:42ch;margin:16px 0 28px;font-size:1.02rem;line-height:2.15}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--bg);text-decoration:none;padding:11px 30px;border-radius:999px;font-weight:500}
+.hero figure{margin:0;border-radius:4px;overflow:hidden;aspect-ratio:4/5;max-width:100%;background:var(--soft)}
+.hero figure img{width:100%;height:100%;object-fit:cover;display:block}
+
+.sec-head{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line);padding-top:36px}
+.sec-head h2{font-size:1.6rem;font-weight:400}
+.sec-head .spark{width:16px;height:16px;flex:none}
+.sec-head span{color:var(--muted);font-size:.9rem}
+.sec-head .script{font-size:3rem;line-height:1.1}
+
+.product{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;padding-block:36px;border-bottom:1px solid var(--line)}
+.product:last-child{border-bottom:0}
+.gallery{display:flex;flex-direction:column;gap:12px;min-width:0}
+.gallery .main{margin:0;border-radius:4px;overflow:hidden;aspect-ratio:4/5;max-width:100%;background:var(--soft)}
+.gallery .main img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs{display:flex;gap:10px}
+.thumbs button{padding:0;border:1px solid transparent;border-radius:3px;overflow:hidden;width:68px;aspect-ratio:1;cursor:pointer;background:var(--soft);opacity:.6}
+.thumbs button[aria-current="true"]{border-color:var(--ink);opacity:1}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.details{display:flex;flex-direction:column;gap:14px;min-width:0;align-self:center}
+.coll{color:var(--muted);font-size:.85rem;display:flex;align-items:center;gap:8px}
+.details h3{font-family:var(--latin);font-weight:300;font-size:1.9rem;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;direction:ltr;text-align:right}
+.details .ar{color:var(--muted);margin-top:-6px}
+.price{font-family:var(--body);font-weight:500;font-size:1.5rem;font-variant-numeric:tabular-nums}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 22px;border-block:1px solid var(--line);padding-block:14px}
+dt{color:var(--muted);font-size:.9rem}
+dd{margin:0}
+.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:500;border:1px solid var(--ink);border-radius:999px;padding:10px 30px;cursor:pointer;background:var(--ink);color:var(--bg)}
+.qty{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:999px;padding:4px 8px}
+.qty button{width:34px;height:34px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:1.15rem;cursor:pointer}
+.qty span{min-width:1.4em;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+.added{color:var(--muted);font-size:.9rem}
+button:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+.addons{margin-top:24px}
+.addon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;margin-top:24px}
+.addon{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.addon.product{display:flex;gap:0;padding-block:0;border-bottom:1px solid var(--line)}
+.addon .main{margin:0;aspect-ratio:4/3;max-width:100%;background:var(--soft)}
+.addon .main img{width:100%;height:100%;object-fit:cover;display:block}
+.addon .thumbs{padding:10px 14px 0}
+.addon .thumbs button{width:50px}
+.addon .body{padding:12px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.addon h3{font-family:var(--latin)!important;font-weight:300;font-size:1.15rem!important;letter-spacing:.12em;text-transform:uppercase;text-align:right}
+.addon .desc{color:var(--muted);font-size:.9rem;line-height:1.95}
+.addon .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;gap:10px;flex-wrap:wrap}
+.addon .price{font-size:1.2rem}
+.addon .btn{padding:8px 20px}
+.info{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;border-top:1px solid var(--line);padding-top:32px}
+.info h3{font-size:1rem;font-weight:500}
+.ship{margin-top:6px;display:flex;flex-direction:column;max-width:320px}
+.ship-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;color:var(--muted);font-size:.93rem;border-bottom:1px dotted var(--line);padding-block:4px}
+.ship-row b{color:var(--ink);font-weight:500;direction:ltr;font-variant-numeric:tabular-nums}
+.ship-row:has(.ship-k){border-bottom:0;padding-top:6px}
+.ship-k{color:var(--ink);font-weight:500;font-size:.9rem}
+.ship-gap{margin-top:10px}
+.info p{margin:4px 0 0;color:var(--muted);font-size:.93rem}
+.foot-brand{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:48px;color:var(--muted)}
+.foot-brand svg{width:44px;height:44px}
+.foot-brand a{color:var(--muted);text-decoration:none;font-family:var(--latin);letter-spacing:.12em;direction:ltr}
+
+.cart{position:fixed;inset:auto 0 0 0;background:var(--surface);border-top:1px solid var(--line);
+  padding:14px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  box-shadow:0 -10px 30px rgba(0,0,0,.06);z-index:5}
+.cart .in{max-width:1040px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cart .sum{display:flex;flex-direction:column;line-height:1.7}
+.cart .sum small{color:var(--muted)}
+.cart .total{font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.wa{background:var(--ink);color:var(--bg);text-decoration:none;padding:11px 26px;border-radius:999px;font-weight:500}
+.wa[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:12px;font-size:.92rem;z-index:6;max-width:calc(100% - 32px);text-align:center;line-height:1.8}
+button.wa{font:inherit;border:0;cursor:pointer}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-width:520px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;
+  padding:22px max(20px,env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:16px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}
+.sheet-head h3{font-size:1.25rem}
+.x{font:inherit;font-size:1.4rem;line-height:1;background:var(--soft);color:var(--ink);border:0;width:36px;height:36px;border-radius:50%;cursor:pointer}
+.olist{border:1px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;background:var(--bg)}
+.oline{display:flex;justify-content:space-between;gap:12px;font-size:.95rem}
+.oline span:first-child{direction:ltr;text-align:right}
+.oline b{font-weight:500;direction:ltr;white-space:nowrap}
+.oitem{display:flex;flex-direction:column;gap:6px;padding-block:8px;border-bottom:1px solid var(--line)}
+.octl{display:flex;justify-content:space-between;align-items:center}
+.qty.sm{gap:10px;padding:2px 6px}
+.qty.sm button{width:30px;height:30px;font-size:1rem}
+.rm{font:inherit;font-size:.88rem;background:none;border:0;color:#B3403A;cursor:pointer;padding:6px 4px;text-decoration:underline;text-underline-offset:3px}
+.clear{font:inherit;font-size:.88rem;background:none;border:0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;align-self:center}
+.deliv{display:flex;flex-direction:column;gap:8px}
+.deliv > label{font-weight:500;font-size:.95rem}
+#gov{font:inherit;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);appearance:auto}
+#gov.need{border-color:#B3403A}
+.dtype{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dtype label{display:flex;flex-direction:column;align-items:center;gap:0;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;background:var(--bg);text-align:center}
+.dtype input{position:absolute;opacity:0;pointer-events:none}
+.dtype label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.dtype label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:2px}
+.dtype span{font-weight:500;font-size:.95rem}
+.dtype small{color:var(--muted);font-size:.82rem;direction:ltr}
+.sums{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line);padding-top:10px}
+.sums .oline{color:var(--muted)}
+.sums .grand{color:var(--ink);font-weight:600;font-size:1.1rem;margin-top:4px}
+.ototal{border-top:0!important;border-top:1px solid var(--line);margin-top:6px;padding-top:8px;font-weight:600}
+.onote{color:var(--muted);font-size:.82rem}
+.step{display:flex;flex-direction:column;gap:6px}
+.step-btn{font:inherit;font-weight:500;font-size:1.02rem;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 18px;border-radius:14px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer;text-align:center}
+.step-btn.alt{background:transparent;color:var(--ink)}
+.step-btn.done{background:#2E7D4F;border-color:#2E7D4F;color:#fff}
+.num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--bg);color:var(--ink);font-size:.85rem;font-weight:600;flex:none}
+.step-btn.alt .num{background:var(--ink);color:var(--bg)}
+.step-btn.done .num{background:#fff;color:#2E7D4F}
+.step small{color:var(--muted);font-size:.85rem;line-height:1.9;text-align:center}
+.or{color:var(--muted);font-size:.85rem;text-align:center;border-top:1px dashed var(--line);padding-top:12px;line-height:1.9}
+
+@media (max-width:720px){
+  .hero,.product{grid-template-columns:1fr;gap:28px}
+  .hero{padding-block:28px 40px}
+  .hero .lockup{align-items:center;text-align:center}
+  .hero > div{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .hero .word{font-size:2rem}
+  .details h3{font-size:1.55rem}
+  .top nav a:first-child{display:none}
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M50 14c5 8 9 13 9 20a9 9 0 0 1-18 0c0-7 4-12 9-20z" stroke-width="2.2"/>
+      <path d="M50 30v9" stroke-width="1.6"/>
+      <path d="M38 46h24" stroke-width="2"/>
+      <path d="M58 46c-2 10-10 13-20 14" stroke-width="2.2"/>
+      <path d="M30 70c10-2 22-1 30-8 6-5 8-10 6-16" stroke-width="2.6"/>
+      <path d="M26 78c12 0 26-2 36-10" stroke-width="2"/>
+      <path d="M40 85c8 0 15-2 20-6" stroke-width="1.6"/>
+    </g>
+    <g class="st">
+      <path d="M24 34l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z"/>
+      <path d="M76 62l1.2 3.3 3.3 1.2-3.3 1.2-1.2 3.3-1.2-3.3-3.3-1.2 3.3-1.2z"/>
+      <path d="M36 20l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>
+      <circle cx="18" cy="56" r="1.4"/><circle cx="66" cy="12" r="1.6"/><circle cx="80" cy="30" r="1.3"/>
+      <circle cx="84" cy="48" r="1.2"/><circle cx="20" cy="76" r="1.2"/><circle cx="74" cy="84" r="1.4"/><circle cx="28" cy="22" r="1"/>
+    </g>
+  </symbol>
+  <symbol id="spark" viewBox="0 0 20 20"><path d="M10 0l2.4 7.6L20 10l-7.6 2.4L10 20l-2.4-7.6L0 10l7.6-2.4z" fill="currentColor"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" aria-label="Pallet"><svg class="logo"><use href="#logo"/></svg><span>Pallet</span></a>
+    <nav><a href="#shop">Price List</a><a href="#addons">الإضافات</a></nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <div class="lockup">
+        <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+        <div class="word">Pallet</div>
+      </div>
+      <h1 class="latin" style="letter-spacing:.06em;font-size:clamp(1.5rem,4.4vw,2.1rem)">Hand Made Candles</h1>
+      <p>من البحر بأصدافه ولآلئه إلى القمر والنجوم وألوان الخريف، شموع تصلح لبيتك أو كهدية. اختر شمعتك واطلبها برسالة عن طريق الانستغرام.</p>
+      <a class="cta latin" href="#shop" style="letter-spacing:.06em;font-weight:400">Shop Candles</a>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="sec-head"><svg class="spark" style="color:var(--star)"><use href="#spark"/></svg><h2 class="latin" style="letter-spacing:.06em">Price List</h2><span id="pcount" hidden></span></div>
+    <div id="list"></div>
+  </section>
+
+  <section class="addons" id="addons">
+    <div class="sec-head"><h2 class="script">Things You Can Add</h2><span>إضافات لطلبك</span></div>
+    <div class="addon-grid" id="addonList"></div>
+  </section>
+
+  <section class="info">
+    <div><h3>طريقة الطلب</h3><p>أضف الشموع للسلة، اضغط «إتمام الطلب»، اختر محافظتك ونوع التوصيل، واضغط «انسخ الطلب».</p></div>
+    <div><h3>التوصيل</h3>
+      <div class="ship">
+        <div class="ship-row"><span class="ship-k">التوصيل العادي</span></div>
+        <div class="ship-row"><span>عمّان</span><b>2 JD</b></div>
+        <div class="ship-row"><span>باقي المحافظات</span><b>3 JD</b></div>
+        <div class="ship-row ship-gap"><span class="ship-k">التوصيل الفوري</span></div>
+        <div class="ship-row"><span>عمّان</span><b>3 JD</b></div>
+        <div class="ship-row"><span>باقي المحافظات</span><b>5 JD</b></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot-brand">
+    <svg class="logo"><use href="#logo"/></svg>
+    <a href="https://www.instagram.com/pallet_.shop" target="_blank" rel="noopener">@pallet_.shop</a>
+  </footer>
+</div>
+
+<div class="cart">
+  <div class="in">
+    <div class="sum"><small id="count">السلة فارغة</small><span class="total" id="total" dir="ltr">0 JD</span></div>
+    <button class="wa" id="wa" type="button" aria-disabled="true">إتمام الطلب</button>
+  </div>
+</div>
+
+<div class="sheet-bg" id="sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-head"><h3 id="sheetTitle">طلبك</h3><button class="x" id="closeSheet" type="button" aria-label="إغلاق">×</button></div>
+    <div class="olist" id="olist"></div>
+    <div class="deliv">
+      <label for="gov">المحافظة</label>
+      <select id="gov">
+        <option value="">اختر المحافظة</option>
+        <option>عمّان</option><option>إربد</option><option>الزرقاء</option><option>البلقاء</option>
+        <option>مادبا</option><option>جرش</option><option>عجلون</option><option>المفرق</option>
+        <option>الكرك</option><option>الطفيلة</option><option>معان</option><option>العقبة</option>
+      </select>
+      <div class="dtype" role="radiogroup" aria-label="نوع التوصيل">
+        <label><input type="radio" name="dtype" id="dt-normal" value="normal" checked><span>توصيل عادي</span><small id="pNormal"></small></label>
+        <label><input type="radio" name="dtype" id="dt-fast" value="fast"><span>توصيل فوري</span><small id="pFast"></small></label>
+      </div>
+    </div>
+    <div class="sums" id="sums"></div>
+    <div class="step">
+      <button class="step-btn" id="copyBtn" type="button"><span id="copyLabel">انسخ الطلب</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+// حساب إنستغرام الطلبات
+const IG = "pallet_.shop";
+let ORDER_MSG = "";
+
+const PRODUCTS = [
+  { id:"sea-star", name:"Sea Star Candle", ar:"شمعة نجمة البحر", coll:"مجموعة Under the Sea",
+    price:10, scent:"Sea Breeze · نسيم البحر", pack:"علبة هدية بشريطة",
+    imgs:[["seastar-1.jpg","الشمعة داخل علبة الهدية مع الشريطة والبطاقة"],
+          ["seastar-2.jpg","الشمعة داخل العلبة المفتوحة"],
+          ["seastar-3.jpg","الشمعة على قماش أبيض مع الأصداف"]] },
+  { id:"big-shell", name:"Big Shell Candle", ar:"شمعة الصدفة الكبيرة", coll:"مجموعة Under the Sea",
+    price:20, scent:"Sea Breeze · نسيم البحر", pack:"علبة هدية Sea Candle",
+    imgs:[["bigshell-1.jpg","شمعة الصدفة الكبيرة مشتعلة"],
+          ["bigshell-2.jpg","الشمعة داخل علبة الهدية المفتوحة"],
+          ["bigshell-3.jpg","علبة Sea Candle المغلقة"]] },
+  { id:"moon", name:"Moon Candle", ar:"شمعة القمر", coll:"",
+    price:20, scent:"Vanilla · ڤانيلا", pack:"",
+    imgs:[["moon-1.jpg","شمعة القمر بغطائها على قماش ساتان أسود"],
+          ["moon-2.jpg","شمعة القمر مفتوحة ومشتعلة بفتيلين"],
+          ["moon-3.jpg","شمعة القمر من الأعلى"]] },
+  { id:"once-upon", name:"Once Upon a Time", ar:"", coll:"",
+    price:40, scent:"Bubble Gum", pack:"علبة Once Upon a Time",
+    imgs:[["onceupon-1.jpg","شمعة Once Upon a Time بألوان البنفسجي والأزرق"],
+          ["onceupon-2.jpg","علبة Once Upon a Time"],
+          ["onceupon-3.jpg","البطاقة المخرّمة بختم الشمع"]] },
+  { id:"pink-star", name:"Pink Star Candle", ar:"", coll:"",
+    price:10, scent:"Cherry · كرز", pack:"علبة هدية بشريطة",
+    imgs:[["pinkstar-1.jpg","شمعة النجمة الوردية على قماش أبيض"],
+          ["pinkstar-2.jpg","الشمعة داخل علبة الهدية بالشريطة"],
+          ["pinkstar-3.jpg","الشمعة داخل العلبة المفتوحة"]] },
+  { id:"sakura", name:"Sakura Candle", ar:"", coll:"",
+    price:25, scent:"Cherry · كرز", pack:"علبة هدية مثمّنة",
+    imgs:[["sakura-1.jpg","شمعة ساكورا بألوان الوردي والبنفسجي مع شجرة ساكورا صغيرة"],
+          ["sakura-2.jpg","شمعة ساكورا مشتعلة بأربع فتائل"],
+          ["sakura-3.jpg","الشمعة داخل علبة الهدية"]] },
+  { id:"fantasy", name:"Fantasy Candle", ar:"", coll:"",
+    price:20, scent:"Sea Breeze · نسيم البحر", pack:"علبة هدية مثمّنة بإطار لوحة",
+    imgs:[["fantasy-1.jpg","شمعة Fantasy على شكل صدفة بألوان الأزرق والوردي"],
+          ["fantasy-2.jpg","شمعة Fantasy مشتعلة بثلاث فتائل"],
+          ["fantasy-3.jpg","علبة الهدية المثمّنة بإطار لوحة زنابق الماء"]] },
+  { id:"eternal", name:"Eternal Ache & Love", ar:"", coll:"",
+    price:50, scent:"Vanilla · ڤانيلا", pack:"",
+    imgs:[["eternal-1.jpg","شمعة Eternal Ache & Love بقلب أحمر داخل إطار ذهبي"],
+          ["eternal-2.jpg","مغلّف أحمر مختوم بالشمع"],
+          ["eternal-3.jpg","بطاقات Eternal Ache & Love مع أدوات ختم الشمع"]] },
+  { id:"autumn", name:"Autumn Candle", ar:"", coll:"",
+    price:25, scent:"Vanilla & Cinnamon · ڤانيلا وقرفة", pack:"علبة هدية مثمّنة بإطار لوحة خريفية",
+    imgs:[["autumn-1.jpg","شمعة Autumn مشتعلة بأربع فتائل مع بيت صغير وأوراق خريفية"],
+          ["autumn-2.jpg","الشمعة داخل العلبة المثمّنة المفتوحة"],
+          ["autumn-3.jpg","غطاء العلبة بإطار لوحة خريفية"]] },
+  { id:"small-autumn", name:"Small Autumn Candle", ar:"", coll:"",
+    price:12, scent:"Vanilla & Cinnamon · ڤانيلا وقرفة", pack:"علبة هدية مع بطاقة لوحة خريفية",
+    imgs:[["smallautumn-1.jpg","شمعة Small Autumn مشتعلة بغطائها المضلّع"],
+          ["smallautumn-2.jpg","الشمعة داخل علبة الهدية مع بطاقة اللوحة"]] },
+  { id:"space-star", name:"Space Star Candle", ar:"", coll:"",
+    price:10, scent:"Vanilla · ڤانيلا", pack:"علبة هدية سوداء بشريطة وبطاقة",
+    imgs:[["spacestar-1.jpg","شمعة Space Star البنفسجية بنجوم فضية"],
+          ["spacestar-2.jpg","الشمعة داخل علبة الهدية السوداء بالشريطة"],
+          ["spacestar-3.jpg","لقطة قريبة للشمعة وهي مشتعلة"]] },
+  { id:"starry", name:"Starry Candle", ar:"", coll:"",
+    price:10, scent:"Vanilla · ڤانيلا", pack:"علبة هدية سوداء بشريطة Pallet وبطاقة ليلة النجوم",
+    imgs:[["starry-1.jpg","شمعة Starry على شكل نجمة بلون أزرق ودوائر مستوحاة من لوحة ليلة النجوم"],
+          ["starry-2.jpg","الشمعة داخل علبة الهدية السوداء"],
+          ["starry-3.jpg","بطاقة لوحة ليلة النجوم"]] },
+  { id:"three-shells", name:"3 Shells Candle", ar:"", coll:"مجموعة Under the Sea",
+    price:10, scent:"Sea Breeze · نسيم البحر", pack:"علبة هدية بشريطة",
+    imgs:[["threeshells-1.jpg","ثلاث شموع على شكل أصداف بجانب كيس Pallet"],
+          ["threeshells-2.jpg","الأصداف الثلاث داخل علبة الهدية بالشريطة"]] },
+];
+
+const ADDONS = [
+  { id:"letter-set", name:"Sea Letter Set", desc:"مغلّف بطانته ألوان مائية بحرية، وورقة رسالة، وبطاقة إهداء على شكل صدفة (From / To)، مع ختم شمع.",
+    price:3,
+    imgs:[["addon-letter-1.jpg","المغلّف وورقة الرسالة وبطاقة الصدفة مع ختم الشمع"],
+          ["addon-letter-2.jpg","المغلّف المفتوح ببطانة الألوان المائية"],
+          ["addon-letter-3.jpg","بطاقة الإهداء على شكل صدفة"]] },
+  { id:"amethyst", name:"Amethyst Necklace", desc:"قلادة بحجر أميثيست خام بلونه البنفسجي، على سلسلة فضية، في علبة سوداء على غطائها إطار ذهبي بصورة مجرّة.",
+    price:5,
+    imgs:[["addon-amethyst-1.jpg","قلادة حجر الأميثيست على وسادة مخملية سوداء"],
+          ["addon-amethyst-2.jpg","القلادة داخل علبتها السوداء"],
+          ["addon-amethyst-3.jpg","أغطية العلب بإطارات ذهبية بصورة مجرّة"]] },
+  { id:"lapis", name:"Lapis Lazuli Bracelet", desc:"سوار من حجر اللازورد الأزرق، في علبة سوداء على غطائها إطار ذهبي بلوحة ليلة النجوم.",
+    price:5,
+    imgs:[["addon-lapis-1.jpg","سوار اللازورد مع علب بإطارات ذهبية بلوحة ليلة النجوم"],
+          ["addon-lapis-2.jpg","السوار داخل علبته السوداء بغطاء الإطار الذهبي"]] },
+];
+const ALL = () => PRODUCTS.concat(ADDONS);
+
+const ar = n => n.toLocaleString("en-US",{maximumFractionDigits:2});
+const jd = n => `⁦${n} JD⁩`;
+const cart = {};
+try{ Object.assign(cart, JSON.parse(localStorage.getItem("pallet-cart")||"{}")); }catch(e){}
+
+function render(){
+  document.getElementById("pcount").textContent = `${ar(PRODUCTS.length)} ${PRODUCTS.length===1?"منتج":"منتجات"}`;
+  document.getElementById("list").innerHTML = PRODUCTS.map(p=>{
+    const q = cart[p.id]||0;
+    return `<article class="product" data-id="${p.id}">
+      <div class="gallery">
+        <figure class="main"><img src="${p.imgs[0][0]}" alt="${p.imgs[0][1]}"></figure>
+        <div class="thumbs">${p.imgs.map((im,i)=>`<button data-img="${i}" aria-current="${i===0}" aria-label="صورة ${ar(i+1)}"><img src="${im[0]}" alt=""></button>`).join("")}</div>
+      </div>
+      <div class="details">
+        ${p.coll?`<div class="coll"><svg class="spark" style="width:10px;height:10px;color:var(--star)"><use href="#spark"/></svg>${p.coll}</div>`:""}
+        <h3>${p.name}</h3>
+        ${p.ar?`<div class="ar">${p.ar}</div>`:""}
+        <div class="price">${jd(p.price)}</div>
+        <dl><dt>الرائحة</dt><dd>${p.scent}</dd></dl>
+        <div class="actions">${q
+          ? `<div class="qty"><button data-a="-" aria-label="إنقاص">−</button><span>${ar(q)}</span><button data-a="+" aria-label="زيادة">+</button></div><button type="button" class="rm" data-a="x">حذف</button>`
+          : `<button class="btn" data-a="+">أضف للسلة</button>`}</div>
+      </div>
+    </article>`;
+  }).join("");
+  document.getElementById("addonList").innerHTML = ADDONS.map(p=>{
+    const q = cart[p.id]||0;
+    return `<article class="addon product" data-id="${p.id}">
+      <figure class="main"><img src="${p.imgs[0][0]}" alt="${p.imgs[0][1]}"></figure>
+      ${p.imgs.length>1?`<div class="thumbs">${p.imgs.map((im,i)=>`<button data-img="${i}" aria-current="${i===0}" aria-label="صورة ${ar(i+1)}"><img src="${im[0]}" alt=""></button>`).join("")}</div>`:""}
+      <div class="body">
+        <h3>${p.name}</h3>
+        <div class="desc">${p.desc}</div>
+        <div class="foot">
+          <div class="price">${jd(p.price)}</div>
+          ${q?`<div class="qty"><button data-a="-" aria-label="إنقاص">−</button><span>${ar(q)}</span><button data-a="+" aria-label="زيادة">+</button></div>`
+             :`<button class="btn" data-a="+">أضف للطلب</button>`}
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+  updateCart();
+}
+
+document.querySelector(".wrap").addEventListener("click",e=>{
+  const art = e.target.closest(".product"); if(!art) return;
+  const p = ALL().find(x=>x.id===art.dataset.id);
+  const t = e.target.closest("[data-img]");
+  if(t){ const i=+t.dataset.img, img=art.querySelector(".main img");
+    img.src=p.imgs[i][0]; img.alt=p.imgs[i][1];
+    art.querySelectorAll(".thumbs button").forEach(b=>b.setAttribute("aria-current", b===t)); return; }
+  const a = e.target.closest("[data-a]"); if(!a) return;
+  if(a.dataset.a==="x") delete cart[p.id];
+  else { cart[p.id]=(cart[p.id]||0)+(a.dataset.a==="+"?1:-1); if(cart[p.id]<=0) delete cart[p.id]; }
+  try{ localStorage.setItem("pallet-cart",JSON.stringify(cart)); }catch(e){}
+  render();
+});
+
+const SHIP = { amman:{normal:2,fast:3}, other:{normal:3,fast:5} };
+function shipInfo(){
+  const gov = document.getElementById("gov").value;
+  const type = document.querySelector('input[name="dtype"]:checked').value;
+  const zone = gov==="عمّان" ? "amman" : "other";
+  return { gov, type, typeName: type==="fast"?"توصيل فوري":"توصيل عادي", fee: gov ? SHIP[zone][type] : null, zone };
+}
+function updateCart(){
+  const items = Object.entries(cart).map(([id,q])=>({p:ALL().find(x=>x.id===id),q})).filter(x=>x.p);
+  const n = items.reduce((s,x)=>s+x.q,0), t = items.reduce((s,x)=>s+x.q*x.p.price,0);
+  document.getElementById("count").textContent = n ? `${ar(n)} قطعة في السلة` : "السلة فارغة";
+  document.getElementById("total").textContent = jd(t);
+  const wa = document.getElementById("wa");
+  if(!n){ wa.setAttribute("aria-disabled","true"); ORDER_MSG=""; document.getElementById("sheet").hidden=true; return; }
+  const sh = shipInfo();
+  const z = sh.gov ? sh.zone : "amman";
+  document.getElementById("pNormal").textContent = sh.gov ? jd(SHIP[z].normal) : "2–3 JD";
+  document.getElementById("pFast").textContent = sh.gov ? jd(SHIP[z].fast) : "3–5 JD";
+  document.getElementById("sums").innerHTML =
+    `<div class="oline"><span>المنتجات</span><b>${jd(t)}</b></div>`
+    + `<div class="oline"><span>${sh.typeName}${sh.gov?" – "+sh.gov:""}</span><b>${sh.gov?jd(sh.fee):"اختر المحافظة"}</b></div>`
+    + `<div class="oline grand"><span>المجموع مع التوصيل</span><b>${sh.gov?jd(t+sh.fee):"—"}</b></div>`;
+  const msg = "مرحبا Pallet، بدي أطلب:\n" + items.map(x=>`• ${x.p.name} × ${x.q} = ${jd(x.q*x.p.price)}`).join("\n")
+    + `\n\nالمنتجات: ${jd(t)}`
+    + (sh.gov ? `\nالتوصيل (${sh.typeName} – ${sh.gov}): ${jd(sh.fee)}\nالمجموع مع التوصيل: ${jd(t+sh.fee)}` : "");
+  wa.removeAttribute("aria-disabled");
+  ORDER_MSG = msg;
+  document.getElementById("olist").innerHTML = items.map(x=>`<div class="oitem" data-id="${x.p.id}">
+      <div class="oline"><span>${x.p.name}</span><b>${jd(x.q*x.p.price)}</b></div>
+      <div class="octl"><div class="qty sm"><button type="button" data-o="-" aria-label="إنقاص">−</button><span>${ar(x.q)}</span><button type="button" data-o="+" aria-label="زيادة">+</button></div>
+      <button type="button" class="rm" data-o="x">حذف</button></div></div>`).join("")
+    + `<button type="button" class="clear" data-o="clear">إفراغ السلة</button>`;
+}
+const sheet = document.getElementById("sheet");
+const copyBtn = document.getElementById("copyBtn"), copyLabel = document.getElementById("copyLabel");
+function resetCopy(){ copyBtn.classList.remove("done"); copyLabel.textContent="انسخ الطلب"; }
+document.getElementById("wa").addEventListener("click",()=>{ if(!ORDER_MSG) return; resetCopy(); sheet.hidden=false; });
+document.getElementById("closeSheet").addEventListener("click",()=>{ sheet.hidden=true; });
+sheet.addEventListener("click",e=>{ if(e.target===sheet) sheet.hidden=true; });
+document.getElementById("olist").addEventListener("click",e=>{
+  const b=e.target.closest("[data-o]"); if(!b) return;
+  const o=b.dataset.o;
+  if(o==="clear"){ for(const k in cart) delete cart[k]; }
+  else { const id=b.closest(".oitem").dataset.id;
+    if(o==="x") delete cart[id];
+    else { cart[id]=(cart[id]||0)+(o==="+"?1:-1); if(cart[id]<=0) delete cart[id]; } }
+  try{ localStorage.setItem("pallet-cart",JSON.stringify(cart)); }catch(err){}
+  resetCopy(); render();
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") sheet.hidden=true; });
+function fallbackCopy(){
+  try{ const ta=document.createElement("textarea"); ta.value=ORDER_MSG; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); const ok=document.execCommand("copy"); ta.remove(); return ok; }catch(e){ return false; }
+}
+document.getElementById("gov").addEventListener("change",e=>{ e.target.classList.remove("need"); resetCopy(); updateCart(); });
+document.querySelectorAll('input[name="dtype"]').forEach(r=>r.addEventListener("change",()=>{ resetCopy(); updateCart(); }));
+copyBtn.addEventListener("click",()=>{
+  const g=document.getElementById("gov");
+  if(!g.value){ g.classList.add("need"); g.focus(); copyLabel.textContent="اختر المحافظة أولًا"; return; }
+  const done=()=>{ copyBtn.classList.add("done"); copyLabel.textContent="تم نسخ الطلب ✓"; };
+  const fail=()=>{ copyLabel.textContent= fallbackCopy() ? "تم نسخ الطلب ✓" : "ما زبط النسخ، حاول مرة ثانية"; if(copyLabel.textContent.startsWith("تم")) copyBtn.classList.add("done"); };
+  try{ navigator.clipboard.writeText(ORDER_MSG).then(done).catch(fail); }catch(e){ fail(); }
+});
+render();
+</script>
+
+</body>
+</html>
