@@ -371,6 +371,7 @@ const ALL = () => PRODUCTS.concat(ADDONS);
 
 const ar = n => n.toLocaleString("en-US",{maximumFractionDigits:2});
 const jd = n => `⁦${n} JD⁩`;
+const jdt = n => `${n} JD`;
 const cart = {};
 try{ Object.assign(cart, JSON.parse(localStorage.getItem("pallet-cart")||"{}")); }catch(e){}
 
@@ -450,9 +451,9 @@ function updateCart(){
     `<div class="oline"><span>المنتجات</span><b>${jd(t)}</b></div>`
     + `<div class="oline"><span>${sh.typeName}${sh.gov?" – "+sh.gov:""}</span><b>${sh.gov?jd(sh.fee):"اختر المحافظة"}</b></div>`
     + `<div class="oline grand"><span>المجموع مع التوصيل</span><b>${sh.gov?jd(t+sh.fee):"—"}</b></div>`;
-  const msg = "مرحبا Pallet، بدي أطلب:\n" + items.map(x=>`• ${x.p.name} × ${x.q} = ${jd(x.q*x.p.price)}`).join("\n")
-    + `\n\nالمنتجات: ${jd(t)}`
-    + (sh.gov ? `\nالتوصيل (${sh.typeName} – ${sh.gov}): ${jd(sh.fee)}\nالمجموع مع التوصيل: ${jd(t+sh.fee)}` : "");
+  const msg = "مرحبا Pallet، بدي أطلب:\n" + items.map(x=>`• ${x.p.name} × ${x.q} = ${jdt(x.q*x.p.price)}`).join("\n")
+    + `\n\nالمنتجات: ${jdt(t)}`
+    + (sh.gov ? `\nالتوصيل (${sh.typeName} – ${sh.gov}): ${jdt(sh.fee)}\nالمجموع مع التوصيل: ${jdt(t+sh.fee)}` : "");
   wa.removeAttribute("aria-disabled");
   ORDER_MSG = msg;
   document.getElementById("olist").innerHTML = items.map(x=>`<div class="oitem" data-id="${x.p.id}">
