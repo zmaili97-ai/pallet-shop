@@ -275,7 +275,7 @@ button.wa{font:inherit;border:0;cursor:pointer}
     </div>
     <div class="sums" id="sums"></div>
     <div class="step">
-      <button class="step-btn" id="copyBtn" type="button"><span id="copyLabel">انسخ الطلب</span></button>
+      <button class="step-btn" id="copyBtn" type="button"><span id="copyLabel">انسخ الطلب وأرسله لنا على الانستغرام</span></button>
     </div>
   </div>
 </div>
@@ -463,7 +463,7 @@ function updateCart(){
 }
 const sheet = document.getElementById("sheet");
 const copyBtn = document.getElementById("copyBtn"), copyLabel = document.getElementById("copyLabel");
-function resetCopy(){ copyBtn.classList.remove("done"); copyLabel.textContent="انسخ الطلب"; }
+function resetCopy(){ copyBtn.classList.remove("done"); copyLabel.textContent="انسخ الطلب وأرسله لنا على الانستغرام"; }
 document.getElementById("wa").addEventListener("click",()=>{ if(!ORDER_MSG) return; resetCopy(); sheet.hidden=false; });
 document.getElementById("closeSheet").addEventListener("click",()=>{ sheet.hidden=true; });
 sheet.addEventListener("click",e=>{ if(e.target===sheet) sheet.hidden=true; });
@@ -486,8 +486,8 @@ document.querySelectorAll('input[name="dtype"]').forEach(r=>r.addEventListener("
 copyBtn.addEventListener("click",()=>{
   const g=document.getElementById("gov");
   if(!g.value){ g.classList.add("need"); g.focus(); copyLabel.textContent="اختر المحافظة أولًا"; return; }
-  const done=()=>{ copyBtn.classList.add("done"); copyLabel.textContent="تم نسخ الطلب ✓"; };
-  const fail=()=>{ copyLabel.textContent= fallbackCopy() ? "تم نسخ الطلب ✓" : "ما زبط النسخ، حاول مرة ثانية"; if(copyLabel.textContent.startsWith("تم")) copyBtn.classList.add("done"); };
+  const done=()=>{ copyBtn.classList.add("done"); copyLabel.textContent="تم نسخ الطلب ✓ أرسله لنا على الانستغرام"; };
+  const fail=()=>{ copyLabel.textContent= fallbackCopy() ? "تم نسخ الطلب ✓ أرسله لنا على الانستغرام" : "ما زبط النسخ، حاول مرة ثانية"; if(copyLabel.textContent.startsWith("تم")) copyBtn.classList.add("done"); };
   try{ navigator.clipboard.writeText(ORDER_MSG).then(done).catch(fail); }catch(e){ fail(); }
 });
 render();
