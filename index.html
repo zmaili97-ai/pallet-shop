@@ -73,6 +73,14 @@ h1,h2,h3{font-family:var(--body);font-weight:500;text-wrap:balance;margin:0;line
 .coll{color:var(--muted);font-size:.85rem;display:flex;align-items:center;gap:8px}
 .details h3{font-family:var(--latin);font-weight:300;font-size:1.9rem;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;direction:ltr;text-align:right}
 .details .ar{color:var(--muted);margin-top:-6px}
+.per{font-size:.85rem;color:var(--muted);font-weight:400}
+.bulk{color:var(--muted);font-size:.9rem;margin-top:-8px}
+.cname{display:flex;flex-direction:column;gap:6px}
+.cname label{font-size:.9rem;font-weight:500}
+.cname small{color:var(--muted);font-weight:400}
+.cname input{font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);max-width:320px}
+.qin{font:inherit;font-weight:600;width:56px;text-align:center;border:0;background:transparent;color:var(--ink);-moz-appearance:textfield}
+.qin::-webkit-outer-spin-button,.qin::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .price{font-family:var(--body);font-weight:500;font-size:1.5rem;font-variant-numeric:tabular-nums}
 dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 22px;border-block:1px solid var(--line);padding-block:14px}
 dt{color:var(--muted);font-size:.9rem}
@@ -349,6 +357,11 @@ const PRODUCTS = [
     price:10, scent:"Sea Breeze · نسيم البحر", pack:"علبة هدية بشريطة",
     imgs:[["threeshells-1.jpg","ثلاث شموع على شكل أصداف بجانب كيس Pallet"],
           ["threeshells-2.jpg","الأصداف الثلاث داخل علبة الهدية بالشريطة"]] },
+  { id:"small-shell", name:"Small Shell Candle", ar:"", coll:"مجموعة Under the Sea",
+    price:4, bulk:{min:21, price:2}, custom:true, scent:"Sea Breeze · نسيم البحر", pack:"",
+    imgs:[["smallshell-1.jpg","شموع صغيرة على شكل صدفة بلون أزرق مزيّنة بالأصداف واللؤلؤ"],
+          ["smallshell-2.jpg","شمعة صدفة صغيرة باليد"],
+          ["smallshell-3.jpg","الشمعة داخل علبة شفافة بشريطة"]] },
 ];
 
 const ADDONS = [
@@ -372,6 +385,10 @@ const ALL = () => PRODUCTS.concat(ADDONS);
 const ar = n => n.toLocaleString("en-US",{maximumFractionDigits:2});
 const jd = n => `⁦${n} JD⁩`;
 const jdt = n => `${n} JD`;
+const unit = (p,q) => (p.bulk && q>=p.bulk.min) ? p.bulk.price : p.price;
+const lineTotal = x => x.q*unit(x.p,x.q);
+const names = {};
+try{ Object.assign(names, JSON.parse(localStorage.getItem("pallet-names")||"{}")); }catch(e){}
 const cart = {};
 try{ Object.assign(cart, JSON.parse(localStorage.getItem("pallet-cart")||"{}")); }catch(e){}
 
@@ -388,10 +405,12 @@ function render(){
         ${p.coll?`<div class="coll"><svg class="spark" style="width:10px;height:10px;color:var(--star)"><use href="#spark"/></svg>${p.coll}</div>`:""}
         <h3>${p.name}</h3>
         ${p.ar?`<div class="ar">${p.ar}</div>`:""}
-        <div class="price">${jd(p.price)}</div>
+        <div class="price">${jd(p.price)}${p.bulk?` <small class="per">للواحدة</small>`:""}</div>
+        ${p.bulk?`<div class="bulk">${jd(p.bulk.price)} للواحدة عند طلب أكثر من ${p.bulk.min-1} قطعة</div>`:""}
         <dl><dt>الرائحة</dt><dd>${p.scent}</dd></dl>
+        ${p.custom?`<div class="cname"><label for="name-${p.id}">إضافة اسم خاص <small>(اختياري)</small></label><input id="name-${p.id}" data-name="${p.id}" type="text" maxlength="40" placeholder="مثلًا: ليان" value="${(names[p.id]||"").replace(/"/g,"&quot;")}"></div>`:""}
         <div class="actions">${q
-          ? `<div class="qty"><button data-a="-" aria-label="إنقاص">−</button><span>${ar(q)}</span><button data-a="+" aria-label="زيادة">+</button></div><button type="button" class="rm" data-a="x">حذف</button>`
+          ? `<div class="qty"><button data-a="-" aria-label="إنقاص">−</button>${p.bulk?`<input class="qin" id="qty-${p.id}" data-q="${p.id}" type="number" inputmode="numeric" min="1" value="${q}" aria-label="الكمية">`:`<span>${ar(q)}</span>`}<button data-a="+" aria-label="زيادة">+</button></div><button type="button" class="rm" data-a="x">حذف</button>`
           : `<button class="btn" data-a="+">أضف للسلة</button>`}</div>
       </div>
     </article>`;
@@ -415,6 +434,19 @@ function render(){
   updateCart();
 }
 
+document.querySelector(".wrap").addEventListener("input",e=>{
+  const n=e.target.closest("[data-name]"); if(!n) return;
+  names[n.dataset.name]=n.value.trim();
+  try{ localStorage.setItem("pallet-names",JSON.stringify(names)); }catch(err){}
+  updateCart();
+});
+document.querySelector(".wrap").addEventListener("change",e=>{
+  const qi=e.target.closest("[data-q]"); if(!qi) return;
+  const v=Math.max(0,Math.floor(+qi.value||0));
+  if(v>0) cart[qi.dataset.q]=v; else delete cart[qi.dataset.q];
+  try{ localStorage.setItem("pallet-cart",JSON.stringify(cart)); }catch(err){}
+  render();
+});
 document.querySelector(".wrap").addEventListener("click",e=>{
   const art = e.target.closest(".product"); if(!art) return;
   const p = ALL().find(x=>x.id===art.dataset.id);
@@ -438,7 +470,7 @@ function shipInfo(){
 }
 function updateCart(){
   const items = Object.entries(cart).map(([id,q])=>({p:ALL().find(x=>x.id===id),q})).filter(x=>x.p);
-  const n = items.reduce((s,x)=>s+x.q,0), t = items.reduce((s,x)=>s+x.q*x.p.price,0);
+  const n = items.reduce((s,x)=>s+x.q,0), t = items.reduce((s,x)=>s+lineTotal(x),0);
   document.getElementById("count").textContent = n ? `${ar(n)} قطعة في السلة` : "السلة فارغة";
   document.getElementById("total").textContent = jd(t);
   const wa = document.getElementById("wa");
@@ -451,13 +483,13 @@ function updateCart(){
     `<div class="oline"><span>المنتجات</span><b>${jd(t)}</b></div>`
     + `<div class="oline"><span>${sh.typeName}${sh.gov?" – "+sh.gov:""}</span><b>${sh.gov?jd(sh.fee):"اختر المحافظة"}</b></div>`
     + `<div class="oline grand"><span>المجموع مع التوصيل</span><b>${sh.gov?jd(t+sh.fee):"—"}</b></div>`;
-  const msg = "مرحبا Pallet، بدي أطلب:\n" + items.map(x=>`• ${x.p.name} × ${x.q} = ${jdt(x.q*x.p.price)}`).join("\n")
+  const msg = "مرحبا Pallet، بدي أطلب:\n" + items.map(x=>`• ${x.p.name} × ${x.q} = ${jdt(lineTotal(x))}${(x.p.custom&&names[x.p.id])?` (الاسم: ${names[x.p.id]})`:""}`).join("\n")
     + `\n\nالمنتجات: ${jdt(t)}`
     + (sh.gov ? `\nالتوصيل (${sh.typeName} – ${sh.gov}): ${jdt(sh.fee)}\nالمجموع مع التوصيل: ${jdt(t+sh.fee)}` : "");
   wa.removeAttribute("aria-disabled");
   ORDER_MSG = msg;
   document.getElementById("olist").innerHTML = items.map(x=>`<div class="oitem" data-id="${x.p.id}">
-      <div class="oline"><span>${x.p.name}</span><b>${jd(x.q*x.p.price)}</b></div>
+      <div class="oline"><span>${x.p.name}${(x.p.custom&&names[x.p.id])?` – ${names[x.p.id]}`:""}</span><b>${jd(lineTotal(x))}</b></div>
       <div class="octl"><div class="qty sm"><button type="button" data-o="-" aria-label="إنقاص">−</button><span>${ar(x.q)}</span><button type="button" data-o="+" aria-label="زيادة">+</button></div>
       <button type="button" class="rm" data-o="x">حذف</button></div></div>`).join("")
     + `<button type="button" class="clear" data-o="clear">إفراغ السلة</button>`;
